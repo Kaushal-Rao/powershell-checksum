@@ -31,11 +31,11 @@ def show_hashes(valid, file):
         valid (str): Valid checksum
         file (str): File checksum
     """
-    print(f"Original:\t{valid}\nFilesum:\t{file}\n")
+    print(f"Original:\t{valid}\nFilehash:\t{file}\n")
 
 
 
-def checksum_validator(file_path, valid_checksum, algorithm="SHA256", compare=False):
+def checksum(file_path, valid_hash, algorithm="SHA256", compare=False):
     """
     Uses Powershell to check the validity of a file's checksum
     
@@ -49,28 +49,28 @@ def checksum_validator(file_path, valid_checksum, algorithm="SHA256", compare=Fa
     cmd = f"Get-FileHash -Path {file_path} -Algorithm {algorithm} | findstr '{algorithm}'"
     
     # get output of command
-    file_checksum = subprocess.run(["powershell", "-Command", cmd], capture_output=True).stdout
+    file_hash = subprocess.run(["powershell", "-Command", cmd], capture_output=True).stdout
     
     # extract hash as lowercase string from the output, drops algorithm and filepath
-    file_checksum = str(file_checksum).lower().split()[1]
+    file_hash = str(file_hash).lower().split()[1]
     
     # get lowercase hash of valid checksum
-    valid_checksum = valid_checksum.lower()
+    valid_hash = valid_hash.lower()
     
     # compare and output result
-    if valid_checksum == file_checksum:
-        print("\n" + "*"*10, "CHECKSUM MATCHED", "*"*10)
+    if valid_hash == file_hash:
+        print("\n" + "*"*10, "CHECKSUM PASSED", "*"*10)
         # only print if requested
-        if compare: show_hashes(valid_checksum, file_checksum)
+        if compare: show_hashes(valid_hash, file_hash)
         else: print()
 
     else:
-        print("\n" + "!"*10, "ALERT! CHECKSUM DIDN'T MATCH", "!"*10)
+        print("\n" + "#"*10, "ALERT! CHECKSUM FAILED", "#"*10)
         # print for manual overview
-        show_hashes(valid_checksum, file_checksum)
+        show_hashes(valid_hash, file_hash)
     
     
-    return file_checksum, valid_checksum
+    return file_hash, valid_hash
 
 
 
@@ -87,8 +87,8 @@ if __name__ == '__main__':
         show = True if args.show_hashes.lower() in ['true', 't', 'y'] else False
         
         # call validator function
-        checksum_validator(file_path=args.path[0],
-                        valid_checksum=args.valid[0],
+        checksum(file_path=args.path[0],
+                        valid_hash=args.valid[0],
                         algorithm=args.algorithm,
                         compare=show)
 
