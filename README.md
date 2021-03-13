@@ -5,5 +5,5 @@ This is a Python script that checks whether a given hash matches the hash of a g
 **Usage**
 
 <code>
-  python checksum_validator.py file-path valid-hash [-a, --algo] [SHA1, SHA256, SHA384, SHA512, MD5] [-s, --show] [true, false]
+  python checksum.py file-path valid-hash [-a, --algo] [SHA1, SHA256, SHA384, SHA512, MD5] [-s, --show] [true, false]
  </code>
