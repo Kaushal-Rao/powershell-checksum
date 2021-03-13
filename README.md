@@ -1,4 +1,4 @@
-# Python Checksum Validator using Powershell
+# Checksum for files using Python and Powershell
 
 This is a Python script that checks whether a given hash matches the hash of a given file. It is built around on the Powershell utility for checking the hash of a file.
 
