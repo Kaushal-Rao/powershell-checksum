@@ -1,2 +1,9 @@
-# powershell-checksum-validator
-A Python script to validate checksums of downloaded files in Windows using Powershell
+# Python Checksum Validator using Powershell
+
+This is a Python script that checks whether a given hash matches the hash of a given file. It is built around on the Powershell utility for checking the hash of a file.
+
+**Usage**
+
+<code>
+  python checksum_validator.py file-path valid-hash [-a, --algo] [SHA1, SHA256, SHA384, SHA512, MD5] [-s, --show] [true, false]
+ </code>
